@@ -60,7 +60,7 @@ Now lets check the solution
 ```python
 # m.src.T is just the matrix A with a column of ones
 # at the bottom, and then simply transposed.
-C = c = np.matmul(m.T, m.src.T)
+C = np.matmul(m.T, m.src.T)
 ```
 Plotting the resulting set of points (green), we see it perfectly lands on B.
 
