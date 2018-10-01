@@ -2,7 +2,7 @@
 
 This is an implementation of the Sorting the Correspondence Space Algorithm in python.
 
-As it was described in "Assalih, H., 2013. 3D reconstruction and motion estimation using forward looking sonar (Doctoral dissertation, Heriot-Watt University)."
+As described in "Assalih, H., 2013. 3D reconstruction and motion estimation using forward looking sonar (Doctoral dissertation, Heriot-Watt University)."
 
 ## Requirements
 
@@ -20,7 +20,7 @@ As it was described in "Assalih, H., 2013. 3D reconstruction and motion estimati
 Consider these 2 sets of points. The goal is to compute the transfomation matrix T that satisfies: B = T.A
 
 A being the coordinates matrix of the blue set of points (starting set) and B the one of the orange set (destination set).
-(Note that the points aren't i order in the following matrices.)
+(Note that the points aren't in order in the following matrices i.e. A[n] doesn't necessarily map to B[n])
 
 ```python
 import numpy as np
@@ -36,7 +36,7 @@ A = np.array([[ 0.39451787, -0.10710954],
               [-0.00553488,  0.24695599],
               [-0.04137169,  0.2184062 ],
               [ 0.43547498, -0.34479352],
-              [-0.20069047 , 0.38554812]])
+              [-0.20069047,  0.38554812]])
 
 B = np.array([[-0.25654269,  0.63330816],
               [ 0.79043454,  0.31349807],
@@ -49,7 +49,7 @@ B = np.array([[-0.25654269,  0.63330816],
               [-0.73315421,  0.7006477 ],
               [ 0.34127214,  1.21264853]])
 
-# computation the transformation matrix using SCS
+# computing the transformation matrix using SCS
 m = SCS(src=A, dst=B)
 m.fit()
 ```
@@ -78,7 +78,7 @@ We can acces both the transformation matrix T and the parameters of the transfom
 
 ## Notes
 
-- This implementation lacks the outliers filtering technique described in the above source. I couldn't get it to work properly so any contribution in that issue will be very much appreciated.
+- This implementation lacks the outliers filtering technique described in the above source. I couldn't get it to work properly so any contribution on this issue will be very much appreciated.
 
 - As mentionned by the paper, this algorithm performs poorly with regards to translations.
 
