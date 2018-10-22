@@ -1,5 +1,6 @@
 import numpy as np
 import numpy.linalg as LA
+from filtering import filter_outliers
 
 
 class SCS():
@@ -43,6 +44,11 @@ class SCS():
         self.dst_sorted_by_beta = sorted(self.dst, key=lambda p: sum(p))
         dst_pinv = LA.pinv(np.transpose(self.dst_sorted_by_beta))
 
+        # constantes necessary in the outlayer filtering, computed
+        # in advance outside the loop for optimization
+        beta = np.array([sum(p) for p in self.dst_sorted_by_beta])
+        vand = np.vstack((beta, np.ones(beta.shape[0])))
+
         min_error = float('inf')
         rate = np.pi/180
 
@@ -50,6 +56,7 @@ class SCS():
             self.y = (np.cos(psi), -np.sin(psi), 0)
 
             self.src_sorted_by_alpha = sorted(self.src, key=lambda p: np.dot(p, self.y))
+            filter_outliers(beta=beta, vand=vand)
 
             src_sorted = np.transpose(self.src_sorted_by_alpha)
             T = LA.inv(np.matmul(src_sorted, dst_pinv))
