@@ -17,7 +17,7 @@ As described in "Assalih, H., 2013. 3D reconstruction and motion estimation usin
 
 ![example visualization](static/example.png)
 
-Consider these 2 sets of points. The goal is to compute the transfomation matrix T that satisfies: B = T.A
+Consider these 2 sets of points. The goal is to compute the transformation matrix T that satisfies: B = T.A
 
 A being the coordinates matrix of the blue set of points (starting set) and B the one of the orange set (destination set).
 (Note that the points aren't in order in the following matrices i.e. A[n] doesn't necessarily map to B[n])
@@ -66,7 +66,7 @@ Plotting the resulting set of points (green), we see it perfectly lands on B.
 
 ![solution visualization](static/solution.png)
 
-We can acces both the transformation matrix T and the parameters of the transfomation using:
+We can access both the transformation matrix T and the parameters of the transformation using:
 ```python
 >>> m.T
 [[ 1.73205081 -1.00000001  0.        ]
@@ -78,9 +78,9 @@ We can acces both the transformation matrix T and the parameters of the transfom
 
 ## Notes
 
-- This implementation lacks the outliers filtering technique described in the above source. I couldn't get it to work properly so any contribution on this issue will be very much appreciated.
+- This implementation lacks the outliers filtering technique described in the above source. A template for the filtering is now available, the tests are written explicit to match the paper and it only lacks the logic, any contribution on this issue will be very much appreciated.
 
-- As mentionned by the paper, this algorithm performs poorly with regards to translations.
+- As mentioned by the paper, this algorithm performs poorly with regards to translations.
 
 ## Author
 
