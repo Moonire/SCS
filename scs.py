@@ -1,6 +1,6 @@
 import numpy as np
 import numpy.linalg as LA
-from .filtering import filtering
+from filtering import filtering
 
 
 class SCS():
