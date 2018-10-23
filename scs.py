@@ -41,12 +41,11 @@ class SCS():
         """
         compute the transformation matrix T
         """
-        self.dst_sorted_by_beta = sorted(self.dst, key=lambda p: sum(p))
-        dst_pinv = LA.pinv(np.transpose(self.dst_sorted_by_beta))
+        dst_by_beta = sorted(self.dst, key=lambda p: sum(p))
 
         # constantes necessary in the filtering, computed
         # in advance outside the loop for optimization
-        beta = np.array([sum(p) for p in self.dst_sorted_by_beta])
+        beta = np.array([sum(p) for p in dst_by_beta])
         vand = np.vstack((beta, np.ones(beta.shape[0])))
 
         min_error = float('inf')
@@ -56,9 +55,11 @@ class SCS():
             y = (np.cos(psi), -np.sin(psi), 0)
 
             src_by_alpha = sorted(self.src, key=lambda p: np.dot(p, y))
-            alpha, beta = filtering(alpha=src_by_alpha, beta=beta, vand=vand, y=y)
+            src_filtered, dst_filtered = filtering(src=src_by_alpha, dst=dst_by_beta, alpha=src_by_alpha, beta=beta, vand=vand, y=y)
 
-            src_sorted = np.transpose(src_by_alpha)
+            src_sorted = np.transpose(src_filtered)
+            dst_pinv = LA.pinv(np.transpose(dst_filtered))
+
             T = LA.inv(np.matmul(src_sorted, dst_pinv))
 
             # pruning
