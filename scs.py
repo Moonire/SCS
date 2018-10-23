@@ -1,6 +1,6 @@
 import numpy as np
 import numpy.linalg as LA
-from filtering import filter_outliers
+from filtering import filtering
 
 
 class SCS():
@@ -53,12 +53,12 @@ class SCS():
         rate = np.pi/180
 
         for psi in (i*rate for i in range(-180, 181)):
-            self.y = (np.cos(psi), -np.sin(psi), 0)
+            y = (np.cos(psi), -np.sin(psi), 0)
 
-            self.src_sorted_by_alpha = sorted(self.src, key=lambda p: np.dot(p, self.y))
-            filter(beta=beta, vand=vand)
+            src_by_alpha = sorted(self.src, key=lambda p: np.dot(p, y))
+            alpha, beta = filtering(alpha=src_by_alpha, beta=beta, vand=vand, y=y)
 
-            src_sorted = np.transpose(self.src_sorted_by_alpha)
+            src_sorted = np.transpose(src_by_alpha)
             T = LA.inv(np.matmul(src_sorted, dst_pinv))
 
             # pruning
